@@ -1,0 +1,16 @@
+[package]
+name = "hyperlane-time"
+version = "0.0.1"
+edition = "2021"
+authors = ["ltpp-universe <root@ltpp.vip>"] 
+license = "MIT"
+description = """A library for fetching the current time based on the system's locale settings."""
+keywords = ["time", "hyperlane", "day", "format", "lang"]
+repository = "https://github.com/ltpp-universe/hyperlane-time.git"
+categories = ["network-programming", "web-programming"]
+exclude = [
+    "target",
+    "Cargo.lock",
+    "sh",
+    ".github"
+]
