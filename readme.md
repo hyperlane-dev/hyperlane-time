@@ -11,8 +11,6 @@
 
 > A library for fetching the current time based on the system's locale settings.
 
-## Features
-
 ## Installation
 
 To use this crate, you can run cmd:
