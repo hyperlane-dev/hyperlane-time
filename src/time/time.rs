@@ -14,6 +14,7 @@ static COMMON_YEAR: [u64; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 ///
 /// # Returns
 /// `bool`: Whether it is a leap year
+#[inline]
 fn is_leap_year(year: u64) -> bool {
     (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
 }
@@ -26,6 +27,7 @@ fn is_leap_year(year: u64) -> bool {
 /// - `month`: The current month
 /// - `day`: The current day
 /// - `remaining_seconds`: The number of seconds passed today
+#[inline]
 fn calculate_current_date() -> (u64, u64, u64, u64) {
     // Get the current time
     let start: SystemTime = SystemTime::now();
@@ -56,6 +58,7 @@ fn calculate_current_date() -> (u64, u64, u64, u64) {
 ///
 /// # Returns
 /// `String`: The formatted time as "YYYY-MM-DD HH:MM:SS"
+#[inline]
 pub fn current_time() -> String {
     let (year, month, day, remaining_seconds) = calculate_current_date();
     let timezone_offset: u64 = from_env_var().value(); // Assuming from_env_var() is defined elsewhere
@@ -76,6 +79,7 @@ pub fn current_time() -> String {
 ///
 /// # Returns
 /// `String`: The formatted date as "YYYY-MM-DD"
+#[inline]
 pub fn current_date() -> String {
     let (year, month, day, _) = calculate_current_date();
     let mut date_time: String = String::new();
