@@ -1,9 +1,13 @@
+<center>
+
 ## hyperlane-time
 
 [![](https://img.shields.io/crates/v/hyperlane-time.svg)](https://crates.io/crates/hyperlane-time)
 [![](https://docs.rs/hyperlane-time/badge.svg)](https://docs.rs/hyperlane-time)
-[![](https://img.shields.io/crates/l/hyperlane-time.svg)](./LICENSE)
 [![](https://github.com/ltpp-universe/hyperlane-time/workflows/Rust/badge.svg)](https://github.com/ltpp-universe/hyperlane-time/actions?query=workflow:Rust)
+[![](https://img.shields.io/crates/l/hyperlane-time.svg)](./LICENSE)
+
+</center>
 
 [Official Documentation](https://docs.ltpp.vip/hyperlane-time/)
 
