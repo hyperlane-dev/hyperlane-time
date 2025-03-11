@@ -1,6 +1,6 @@
 [package]
 name = "hyperlane-time"
-version = "0.0.7"
+version = "0.0.9"
 edition = "2021"
 authors = ["ltpp-universe <root@ltpp.vip>"] 
 license = "MIT"
@@ -23,7 +23,6 @@ panic = "unwind"
 debug = false
 codegen-units = 1
 strip = "debuginfo"
-backtrace = "off"
 
 [profile.release]
 incremental = false
@@ -33,4 +32,3 @@ panic = "unwind"
 debug = false
 codegen-units = 1
 strip = "debuginfo"
-backtrace = "off"
