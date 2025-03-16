@@ -3,9 +3,15 @@ use std::fmt::Write;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 /// Leap Year
-static LEAP_YEAR: [u64; 12] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+pub static LEAP_YEAR: [u64; 12] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 /// Common Year
-static COMMON_YEAR: [u64; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+pub static COMMON_YEAR: [u64; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+/// Days
+pub static DAYS: [&str; 7] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+/// Months
+pub static MONTHS: [&str; 12] = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
 
 /// Determines if a year is a leap year.
 ///
@@ -85,4 +91,60 @@ pub fn current_date() -> String {
     let mut date_time: String = String::new();
     write!(&mut date_time, "{:04}-{:02}-{:02}", year, month, day).unwrap_or_default();
     date_time
+}
+
+/// Computes the year, month, and day from days since Unix epoch (1970-01-01).
+///
+/// - `days_since_epoch`: Number of days since `1970-01-01`.
+/// - Returns: `(year, month, day)`
+fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
+    let mut year: u64 = 1970;
+    loop {
+        let days_in_year = if is_leap_year(year) { 366 } else { 365 };
+        if days_since_epoch < days_in_year {
+            break;
+        }
+        days_since_epoch -= days_in_year as u64;
+        year += 1;
+    }
+    let mut month: u64 = 0;
+    for (i, &days) in COMMON_YEAR.iter().enumerate() {
+        let days_in_month = if i == 1 && is_leap_year(year) {
+            days + 1
+        } else {
+            days
+        };
+        if days_since_epoch < days_in_month as u64 {
+            month = i as u64 + 1;
+            return (year, month, (days_since_epoch + 1) as u64);
+        }
+        days_since_epoch -= days_in_month as u64;
+    }
+
+    (year, month, 1)
+}
+
+#[inline]
+pub fn current_date_gmt() -> String {
+    let now: SystemTime = SystemTime::now();
+    let duration_since_epoch: Duration = now.duration_since(UNIX_EPOCH).unwrap();
+    let timestamp: u64 = duration_since_epoch.as_secs();
+    let seconds_in_day: u64 = 86_400;
+    let days_since_epoch: u64 = timestamp / seconds_in_day;
+    let seconds_of_day: u64 = timestamp % seconds_in_day;
+    let hours: u64 = (seconds_of_day / 3600) as u64;
+    let minutes: u64 = ((seconds_of_day % 3600) / 60) as u64;
+    let seconds: u64 = (seconds_of_day % 60) as u64;
+    let (year, month, day) = compute_date(days_since_epoch);
+    let weekday: usize = ((days_since_epoch + 4) % 7) as usize;
+    format!(
+        "{}, {:02} {} {} {:02}:{:02}:{:02} GMT",
+        DAYS[weekday],
+        day,
+        MONTHS[month as usize - 1],
+        year,
+        hours,
+        minutes,
+        seconds
+    )
 }

@@ -30,6 +30,7 @@ cargo add hyperlane-time
 use hyperlane_time::*;
 println!("Now time: {}", current_time());
 println!("Now day: {}", current_date());
+println!("Now date: {}", current_date_gmt());
 ```
 
 ## License

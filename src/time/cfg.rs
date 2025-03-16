@@ -15,3 +15,9 @@ fn test_now_day() {
     use crate::*;
     println!("test_now_day: {}", current_date());
 }
+
+#[test]
+fn test_date_time() {
+    use crate::*;
+    println!("test_date_gmt: {}", current_date_gmt());
+}
