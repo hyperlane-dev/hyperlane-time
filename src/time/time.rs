@@ -24,39 +24,17 @@ pub fn is_leap_year(year: u64) -> bool {
     (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
 }
 
-/// Calculates the current year, month, day, and the number of seconds remaining in the day.
-///
-/// # Returns
-/// A tuple containing:
-/// - `year`: The current year
-/// - `month`: The current month
-/// - `day`: The current day
-/// - `remaining_seconds`: The number of seconds passed today
-fn calculate_current_date() -> (u64, u64, u64, u64) {
-    let start: SystemTime = SystemTime::now();
-    let duration: Duration = start.duration_since(UNIX_EPOCH).unwrap();
-    let total_seconds: u64 = duration.as_secs();
-    let days_since_epoch: u64 = total_seconds / 86400;
-    let (year, month, day) = compute_date(days_since_epoch);
-    let remaining_seconds: u64 = total_seconds % 86400;
-    (year, month, day, remaining_seconds)
-}
-
 /// Gets the current time, including the date and time.
 ///
 /// # Returns
 /// `String`: The formatted time as "YYYY-MM-DD HH:MM:SS"
-pub fn current_time() -> String {
-    let (year, month, day, remaining_seconds) = calculate_current_date();
-    let timezone_offset: u64 = from_env_var().value();
-    let hours: u64 = ((remaining_seconds + timezone_offset) / 3600) % 24;
-    let minutes: u64 = (remaining_seconds % 3600) / 60;
-    let seconds: u64 = remaining_seconds % 60;
+pub fn time() -> String {
+    let (year, month, day, hour, minute, second, _, _) = calculate_time();
     let mut date_time: String = String::new();
     write!(
         &mut date_time,
         "{:04}-{:02}-{:02} {:02}:{:02}:{:02}",
-        year, month, day, hours, minutes, seconds
+        year, month, day, hour, minute, second
     )
     .unwrap_or_default();
     date_time
@@ -66,8 +44,8 @@ pub fn current_time() -> String {
 ///
 /// # Returns
 /// `String`: The formatted date as "YYYY-MM-DD"
-pub fn current_date() -> String {
-    let (year, month, day, _) = calculate_current_date();
+pub fn date() -> String {
+    let (year, month, day, _, _, _, _, _) = calculate_time();
     let mut date_time: String = String::new();
     write!(&mut date_time, "{:04}-{:02}-{:02}", year, month, day).unwrap_or_default();
     date_time
@@ -77,7 +55,7 @@ pub fn current_date() -> String {
 ///
 /// - `days_since_epoch`: Number of days since `1970-01-01`.
 /// - Returns: `(year, month, day)`
-fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
+pub fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
     let mut year: u64 = 1970;
     loop {
         let days_in_year: u64 = if is_leap_year(year) { 366 } else { 365 };
@@ -108,7 +86,7 @@ fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
 ///
 /// # Returns
 /// `String`: The current date and time in GMT format.
-pub fn current_date_gmt() -> String {
+pub fn gmt() -> String {
     let now: SystemTime = SystemTime::now();
     let duration_since_epoch: Duration = now.duration_since(UNIX_EPOCH).unwrap();
     let timestamp: u64 = duration_since_epoch.as_secs();
@@ -136,91 +114,85 @@ pub fn current_date_gmt() -> String {
 ///
 /// # Returns
 /// `u64`: The current year
-pub fn current_year() -> u64 {
-    let (year, _, _, _) = calculate_current_date();
-    year
+pub fn year() -> u64 {
+    calculate_time().0
 }
 
 /// Gets the current month.
 ///
 /// # Returns
 /// `u64`: The current month (1-12)
-pub fn current_month() -> u64 {
-    let (_, month, _, _) = calculate_current_date();
-    month
+pub fn month() -> u64 {
+    calculate_time().1
 }
 
 /// Gets the current day.
 ///
 /// # Returns
 /// `u64`: The current day of the month
-pub fn current_day() -> u64 {
-    let (_, _, day, _) = calculate_current_date();
-    day
+pub fn day() -> u64 {
+    calculate_time().2
 }
 
 /// Gets the current hour.
 ///
 /// # Returns
 /// `u64`: The current hour (0-23)
-pub fn current_hour() -> u64 {
-    let (_, _, _, remaining_seconds) = calculate_current_date();
-    let timezone_offset: u64 = from_env_var().value();
-    ((remaining_seconds + timezone_offset) / 3600) % 24
+pub fn hour() -> u64 {
+    calculate_time().3
 }
 
 /// Gets the current minute.
 ///
 /// # Returns
 /// `u64`: The current minute (0-59)
-pub fn current_minute() -> u64 {
-    let (_, _, _, remaining_seconds) = calculate_current_date();
-    (remaining_seconds % 3600) / 60
+pub fn minute() -> u64 {
+    calculate_time().4
 }
 
 /// Gets the current second.
 ///
 /// # Returns
 /// `u64`: The current second (0-59)
-pub fn current_second() -> u64 {
-    let (_, _, _, remaining_seconds) = calculate_current_date();
-    remaining_seconds % 60
+pub fn second() -> u64 {
+    calculate_time().5
 }
 
 /// Gets the current timestamp in milliseconds.
 ///
 /// # Returns
 /// `u64`: The current timestamp in milliseconds since Unix epoch
-pub fn current_timestamp_millis() -> u64 {
-    let start: SystemTime = SystemTime::now();
-    let duration: Duration = start.duration_since(UNIX_EPOCH).unwrap();
-    duration.as_millis() as u64
+pub fn millis() -> u64 {
+    calculate_time().6
 }
 
 /// Gets the current timestamp in microseconds.
 ///
 /// # Returns
 /// `u64`: The current timestamp in microseconds since Unix epoch
-pub fn current_timestamp_micros() -> u64 {
-    let start: SystemTime = SystemTime::now();
-    let duration: Duration = start.duration_since(UNIX_EPOCH).unwrap();
-    duration.as_micros() as u64
+pub fn micros() -> u64 {
+    calculate_time().7
 }
 
-/// Calculates the current year, month, day, seconds remaining in the day, and milliseconds.
+/// Calculates the current year, month, day, hour, minute, second, millisecond and microsecond.
 ///
 /// # Returns
 /// A tuple containing:
 /// - `year`: The current year
 /// - `month`: The current month
 /// - `day`: The current day
-/// - `remaining_seconds`: The number of seconds passed today
-/// - `milliseconds`: The number of milliseconds passed in the current second
-fn calculate_current_date_with_millis() -> (u64, u64, u64, u64, u64) {
+/// - `hour`: The current hour (0-23)
+/// - `minute`: The current minute (0-59)
+/// - `second`: The current second (0-59)
+/// - `millisecond`: The number of milliseconds passed in the current second
+/// - `microsecond`: The number of microseconds passed in the current second
+pub fn calculate_time() -> (u64, u64, u64, u64, u64, u64, u64, u64) {
     let start: SystemTime = SystemTime::now();
     let duration: Duration = start.duration_since(UNIX_EPOCH).unwrap();
     let total_seconds: u64 = duration.as_secs();
-    let milliseconds: u64 = duration.subsec_millis() as u64;
+    let nanoseconds: u64 = duration.subsec_nanos() as u64;
+    let milliseconds: u64 = nanoseconds / 1_000_000;
+    let microseconds: u64 = nanoseconds / 1_000;
     let mut total_days: u64 = total_seconds / 86400;
     let mut year: u64 = 1970;
     while total_days >= if is_leap_year(year) { 366 } else { 365 } {
@@ -239,67 +211,84 @@ fn calculate_current_date_with_millis() -> (u64, u64, u64, u64, u64) {
     }
     let day: u64 = total_days + 1;
     let remaining_seconds: u64 = total_seconds % 86400;
-    (year, month, day, remaining_seconds, milliseconds)
-}
-
-fn calculate_current_date_with_micros() -> (u64, u64, u64, u64, u64) {
-    let start: SystemTime = SystemTime::now();
-    let duration: Duration = start.duration_since(UNIX_EPOCH).unwrap();
-    let total_seconds: u64 = duration.as_secs();
-    let microseconds: u64 = duration.subsec_micros() as u64;
-    let mut total_days: u64 = total_seconds / 86400;
-    let mut year: u64 = 1970;
-    while total_days >= if is_leap_year(year) { 366 } else { 365 } {
-        total_days -= if is_leap_year(year) { 366 } else { 365 };
-        year += 1;
-    }
-    let mut month: u64 = 1;
-    let month_days: [u64; 12] = if is_leap_year(year) {
-        LEAP_YEAR
-    } else {
-        COMMON_YEAR
-    };
-    while total_days >= month_days[month as usize - 1] {
-        total_days -= month_days[month as usize - 1];
-        month += 1;
-    }
-    let day: u64 = total_days + 1;
-    let remaining_seconds: u64 = total_seconds % 86400;
-    (year, month, day, remaining_seconds, microseconds)
+    let timezone_offset: u64 = from_env_var().value();
+    let hour: u64 = ((remaining_seconds + timezone_offset) / 3600) % 24;
+    let minute: u64 = (remaining_seconds % 3600) / 60;
+    let second: u64 = remaining_seconds % 60;
+    (
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        milliseconds,
+        microseconds,
+    )
 }
 
 /// Gets the current time with milliseconds, including the date and time.
 ///
 /// # Returns
 /// `String`: The formatted time as "YYYY-MM-DD HH:MM:SS.sss"
-pub fn current_time_with_millis() -> String {
-    let (year, month, day, remaining_seconds, milliseconds) = calculate_current_date_with_millis();
-    let timezone_offset: u64 = from_env_var().value();
-    let hours: u64 = ((remaining_seconds + timezone_offset) / 3600) % 24;
-    let minutes: u64 = (remaining_seconds % 3600) / 60;
-    let seconds: u64 = remaining_seconds % 60;
+pub fn time_millis() -> String {
+    let (year, month, day, hour, minute, second, millisecond, _) = calculate_time();
     let mut date_time: String = String::new();
     write!(
         &mut date_time,
         "{:04}-{:02}-{:02} {:02}:{:02}:{:02}.{:03}",
-        year, month, day, hours, minutes, seconds, milliseconds
+        year, month, day, hour, minute, second, millisecond
     )
     .unwrap_or_default();
     date_time
 }
 
-pub fn current_time_with_micros() -> String {
-    let (year, month, day, remaining_seconds, microseconds) = calculate_current_date_with_micros();
-    let timezone_offset: u64 = from_env_var().value();
-    let hours: u64 = ((remaining_seconds + timezone_offset) / 3600) % 24;
-    let minutes: u64 = (remaining_seconds % 3600) / 60;
-    let seconds: u64 = remaining_seconds % 60;
+/// Gets the current time with microseconds, including the date and time.
+///
+/// # Returns
+/// `String`: The formatted time as "YYYY-MM-DD HH:MM:SS.ssssss"
+pub fn time_micros() -> String {
+    let (year, month, day, hour, minute, second, _, microseconds) = calculate_time();
     let mut date_time: String = String::new();
     write!(
         &mut date_time,
         "{:04}-{:02}-{:02} {:02}:{:02}:{:02}.{:06}",
-        year, month, day, hours, minutes, seconds, microseconds
+        year, month, day, hour, minute, second, microseconds
     )
     .unwrap_or_default();
     date_time
+}
+
+/// Gets the current timestamp in seconds since Unix epoch.
+///
+/// # Returns
+/// `u64`: The current timestamp in seconds
+pub fn timestamp() -> u64 {
+    let timezone_offset: u64 = from_env_var().value();
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_secs()
+        .saturating_add(timezone_offset)
+}
+
+/// Gets the current timestamp in milliseconds since Unix epoch.
+///
+/// # Returns
+/// `u64`: The current timestamp in milliseconds
+pub fn timestamp_millis() -> u64 {
+    let timezone_offset: u64 = from_env_var().value();
+    let duration: Duration = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
+    (duration.as_secs().saturating_add(timezone_offset)) * 1000 + duration.subsec_millis() as u64
+}
+
+/// Gets the current timestamp in microseconds since Unix epoch.
+///
+/// # Returns
+/// `u64`: The current timestamp in microseconds
+pub fn timestamp_micros() -> u64 {
+    let timezone_offset: u64 = from_env_var().value();
+    let duration: Duration = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
+    (duration.as_secs().saturating_add(timezone_offset)) * 1_000_000
+        + duration.subsec_micros() as u64
 }

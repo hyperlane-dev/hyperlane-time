@@ -7,15 +7,30 @@ fn test_lang() {
 #[test]
 fn test_now_time() {
     use crate::*;
-    println!("test_now_time: {}", current_time());
+    println!("test_now_time: {}", time());
 }
 
 #[test]
-fn test_now_day() {
+fn test_methods() {
     use crate::*;
-    println!("当前时间: {}", current_time());
-    println!("当前日期: {}", current_date());
-    println!("GMT日期: {}", current_date_gmt());
-    println!("时间戳(毫秒): {}", current_timestamp_millis());
-    println!("时间戳(微秒): {}", current_timestamp_micros());
+
+    println!("Current Time: {}", time());
+    println!("Current Date: {}", date());
+    println!("GMT Date: {}", gmt());
+    println!("Timestamp (s): {}", timestamp());
+    println!("Timestamp (ms): {}", timestamp_millis());
+    println!("Timestamp (μs): {}", timestamp_micros());
+    println!("Current Year: {}", year());
+    println!("Current Month: {}", month());
+    println!("Current Day: {}", day());
+    println!("Current Hour: {}", hour());
+    println!("Current Minute: {}", minute());
+    println!("Current Second: {}", second());
+    println!("Current Millis: {}", millis());
+    println!("Current Micros: {}", micros());
+    println!("Is Leap Year (1949): {}", is_leap_year(1949));
+    println!("Calculate Current Time: {:?}", calculate_time());
+    println!("Compute Date (10000 days): {:?}", compute_date(10000));
+    println!("Current Time with Millis: {}", time_millis());
+    println!("Current Time with Micros: {}", time_micros());
 }
