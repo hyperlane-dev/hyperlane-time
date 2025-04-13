@@ -13,11 +13,9 @@ fn test_now_time() {
 #[test]
 fn test_now_day() {
     use crate::*;
-    println!("test_now_day: {}", current_date());
-}
-
-#[test]
-fn test_date_time() {
-    use crate::*;
-    println!("test_date_gmt: {}", current_date_gmt());
+    println!("当前时间: {}", current_time());
+    println!("当前日期: {}", current_date());
+    println!("GMT日期: {}", current_date_gmt());
+    println!("时间戳(毫秒): {}", current_timestamp_millis());
+    println!("时间戳(微秒): {}", current_timestamp_micros());
 }
