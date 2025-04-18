@@ -1,2 +1,2 @@
 pub(crate) mod time;
-pub use time::time::*;
+pub use time::r#fn::*;

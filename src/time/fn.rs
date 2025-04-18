@@ -1,4 +1,4 @@
-use super::r#type::from_env_var;
+use super::r#enum::from_env_var;
 use std::fmt::Write;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 

@@ -1,6 +1,6 @@
 #[test]
 fn test_lang() {
-    use crate::time::r#type::from_env_var;
+    use crate::time::r#enum::from_env_var;
     println!("test_lang: {}", from_env_var());
 }
 

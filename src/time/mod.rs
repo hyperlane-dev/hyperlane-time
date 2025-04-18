@@ -1,3 +1,3 @@
 pub(crate) mod cfg;
-pub(crate) mod time;
-pub(crate) mod r#type;
+pub(crate) mod r#enum;
+pub(crate) mod r#fn;
