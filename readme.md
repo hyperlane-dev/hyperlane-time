@@ -5,7 +5,7 @@
 [![](https://img.shields.io/crates/v/hyperlane-time.svg)](https://crates.io/crates/hyperlane-time)
 [![](https://img.shields.io/crates/d/hyperlane-time.svg)](https://img.shields.io/crates/d/hyperlane-time.svg)
 [![](https://docs.rs/hyperlane-time/badge.svg)](https://docs.rs/hyperlane-time)
-[![](https://github.com/ltpp-universe/hyperlane-time/workflows/Rust/badge.svg)](https://github.com/ltpp-universe/hyperlane-time/actions?query=workflow:Rust)
+[![](https://github.com/eastspire/hyperlane-time/workflows/Rust/badge.svg)](https://github.com/eastspire/hyperlane-time/actions?query=workflow:Rust)
 [![](https://img.shields.io/crates/l/hyperlane-time.svg)](./LICENSE)
 
 </center>
@@ -60,4 +60,4 @@ Contributions are welcome! Please open an issue or submit a pull request.
 
 ## Contact
 
-For any inquiries, please reach out to the author at [ltpp-universe <root@ltpp.vip>](mailto:root@ltpp.vip).
+For any inquiries, please reach out to the author at [eastspire <root@ltpp.vip>](mailto:root@ltpp.vip).
