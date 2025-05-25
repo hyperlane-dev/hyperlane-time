@@ -1,6 +1,6 @@
 [package]
 name = "hyperlane-time"
-version = "0.5.4"
+version = "0.5.5"
 edition = "2024"
 authors = ["root@ltpp.vip"] 
 license = "MIT"
