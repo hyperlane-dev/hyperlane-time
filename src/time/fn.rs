@@ -1,6 +1,4 @@
-use super::r#enum::from_env_var;
-use std::fmt::Write;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use crate::*;
 
 /// Leap Year
 pub const LEAP_YEAR: [u64; 12] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -15,11 +13,13 @@ pub const MONTHS: [&str; 12] = [
 
 /// Determines if a year is a leap year.
 ///
-/// # Parameters
-/// `u64`: The year
+/// # Arguments
+///
+/// - `u64` - The year to check.
 ///
 /// # Returns
-/// `bool`: Whether it is a leap year
+///
+/// - `bool` - Whether the year is a leap year.
 pub fn is_leap_year(year: u64) -> bool {
     (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
 }
@@ -27,7 +27,8 @@ pub fn is_leap_year(year: u64) -> bool {
 /// Gets the current time, including the date and time.
 ///
 /// # Returns
-/// `String`: The formatted time as "YYYY-MM-DD HH:MM:SS"
+///
+/// - `String` - The formatted time as "YYYY-MM-DD HH:MM:SS"
 pub fn time() -> String {
     let (year, month, day, hour, minute, second, _, _) = calculate_time();
     let mut date_time: String = String::new();
@@ -43,7 +44,8 @@ pub fn time() -> String {
 /// Gets the current day, without the time.
 ///
 /// # Returns
-/// `String`: The formatted date as "YYYY-MM-DD"
+///
+/// - `String` - The formatted date as "YYYY-MM-DD"
 pub fn date() -> String {
     let (year, month, day, _, _, _, _, _) = calculate_time();
     let mut date_time: String = String::new();
@@ -53,8 +55,13 @@ pub fn date() -> String {
 
 /// Computes the year, month, and day from days since Unix epoch (1970-01-01).
 ///
-/// - `days_since_epoch`: Number of days since `1970-01-01`.
-/// - Returns: `(year, month, day)`
+/// # Arguments
+///
+/// - `u64` - Number of days since Unix epoch.
+///
+/// # Returns
+///
+/// - `(u64, u64, u64)` - Tuple containing year, month and day.
 pub fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
     let mut year: u64 = 1970;
     loop {
@@ -85,7 +92,8 @@ pub fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
 /// Gets the current date and time in GMT format.
 ///
 /// # Returns
-/// `String`: The current date and time in GMT format.
+///
+/// - `String` - The current date and time in GMT format.
 pub fn gmt() -> String {
     let now: SystemTime = SystemTime::now();
     let duration_since_epoch: Duration = now.duration_since(UNIX_EPOCH).unwrap();
@@ -113,7 +121,8 @@ pub fn gmt() -> String {
 /// Gets the current year.
 ///
 /// # Returns
-/// `u64`: The current year
+///
+/// - `u64` - The current year
 pub fn year() -> u64 {
     calculate_time().0
 }
@@ -121,7 +130,8 @@ pub fn year() -> u64 {
 /// Gets the current month.
 ///
 /// # Returns
-/// `u64`: The current month (1-12)
+///
+/// - `u64` - The current month (1-12)
 pub fn month() -> u64 {
     calculate_time().1
 }
@@ -129,7 +139,8 @@ pub fn month() -> u64 {
 /// Gets the current day.
 ///
 /// # Returns
-/// `u64`: The current day of the month
+///
+/// - `u64` - The current day of the month
 pub fn day() -> u64 {
     calculate_time().2
 }
@@ -137,7 +148,8 @@ pub fn day() -> u64 {
 /// Gets the current hour.
 ///
 /// # Returns
-/// `u64`: The current hour (0-23)
+///
+/// - `u64` - The current hour (0-23)
 pub fn hour() -> u64 {
     calculate_time().3
 }
@@ -145,7 +157,8 @@ pub fn hour() -> u64 {
 /// Gets the current minute.
 ///
 /// # Returns
-/// `u64`: The current minute (0-59)
+///
+/// - `u64` - The current minute (0-59)
 pub fn minute() -> u64 {
     calculate_time().4
 }
@@ -153,7 +166,8 @@ pub fn minute() -> u64 {
 /// Gets the current second.
 ///
 /// # Returns
-/// `u64`: The current second (0-59)
+///
+/// - `u64` - The current second (0-59)
 pub fn second() -> u64 {
     calculate_time().5
 }
@@ -161,7 +175,8 @@ pub fn second() -> u64 {
 /// Gets the current timestamp in milliseconds.
 ///
 /// # Returns
-/// `u64`: The current timestamp in milliseconds since Unix epoch
+///
+/// - `u64` - The current timestamp in milliseconds since Unix epoch
 pub fn millis() -> u64 {
     calculate_time().6
 }
@@ -169,7 +184,8 @@ pub fn millis() -> u64 {
 /// Gets the current timestamp in microseconds.
 ///
 /// # Returns
-/// `u64`: The current timestamp in microseconds since Unix epoch
+///
+/// - `u64` - The current timestamp in microseconds since Unix epoch
 pub fn micros() -> u64 {
     calculate_time().7
 }
@@ -177,15 +193,16 @@ pub fn micros() -> u64 {
 /// Calculates the current year, month, day, hour, minute, second, millisecond and microsecond.
 ///
 /// # Returns
-/// A tuple containing:
-/// - `year`: The current year
-/// - `month`: The current month
-/// - `day`: The current day
-/// - `hour`: The current hour (0-23)
-/// - `minute`: The current minute (0-59)
-/// - `second`: The current second (0-59)
-/// - `millisecond`: The number of milliseconds passed in the current second
-/// - `microsecond`: The number of microseconds passed in the current second
+///
+/// - `(u64, u64, u64, u64, u64, u64, u64, u64)` - Tuple containing:
+///   - Year
+///   - Month
+///   - Day
+///   - Hour (0-23)
+///   - Minute (0-59)
+///   - Second (0-59)
+///   - Milliseconds in current second
+///   - Microseconds in current second
 pub fn calculate_time() -> (u64, u64, u64, u64, u64, u64, u64, u64) {
     let start: SystemTime = SystemTime::now();
     let duration: Duration = start.duration_since(UNIX_EPOCH).unwrap();
@@ -230,7 +247,8 @@ pub fn calculate_time() -> (u64, u64, u64, u64, u64, u64, u64, u64) {
 /// Gets the current time with milliseconds, including the date and time.
 ///
 /// # Returns
-/// `String`: The formatted time as "YYYY-MM-DD HH:MM:SS.sss"
+///
+/// - `String` - The formatted time as "YYYY-MM-DD HH:MM:SS.sss"
 pub fn time_millis() -> String {
     let (year, month, day, hour, minute, second, millisecond, _) = calculate_time();
     let mut date_time: String = String::new();
@@ -246,7 +264,8 @@ pub fn time_millis() -> String {
 /// Gets the current time with microseconds, including the date and time.
 ///
 /// # Returns
-/// `String`: The formatted time as "YYYY-MM-DD HH:MM:SS.ssssss"
+///
+/// - `String` - The formatted time as "YYYY-MM-DD HH:MM:SS.ssssss"
 pub fn time_micros() -> String {
     let (year, month, day, hour, minute, second, _, microseconds) = calculate_time();
     let mut date_time: String = String::new();
@@ -262,7 +281,8 @@ pub fn time_micros() -> String {
 /// Gets the current timestamp in seconds since Unix epoch.
 ///
 /// # Returns
-/// `u64`: The current timestamp in seconds
+///
+/// - `u64` - The current timestamp in seconds
 pub fn timestamp() -> u64 {
     let timezone_offset: u64 = from_env_var().value();
     SystemTime::now()
@@ -275,7 +295,8 @@ pub fn timestamp() -> u64 {
 /// Gets the current timestamp in milliseconds since Unix epoch.
 ///
 /// # Returns
-/// `u64`: The current timestamp in milliseconds
+///
+/// - `u64` - The current timestamp in milliseconds
 pub fn timestamp_millis() -> u64 {
     let timezone_offset: u64 = from_env_var().value();
     let duration: Duration = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
@@ -285,7 +306,8 @@ pub fn timestamp_millis() -> u64 {
 /// Gets the current timestamp in microseconds since Unix epoch.
 ///
 /// # Returns
-/// `u64`: The current timestamp in microseconds
+///
+/// - `u64` - The current timestamp in microseconds
 pub fn timestamp_micros() -> u64 {
     let timezone_offset: u64 = from_env_var().value();
     let duration: Duration = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();

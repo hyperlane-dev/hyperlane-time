@@ -1,4 +1,4 @@
-use std::{env, fmt, str::FromStr};
+use crate::*;
 
 /// Represents supported languages.
 #[derive(Debug, Clone, PartialEq)]
@@ -71,14 +71,8 @@ impl Lang {
     /// indicating the difference from Coordinated Universal Time (UTC).
     ///
     /// # Returns
-    /// - `u64`: The UTC offset in seconds. For example,
-    ///   - `0` for UTC (English),
-    ///   - `28800` for UTC+8 (Chinese),
-    ///   - `3600` for UTC+1 (French, German, Spanish, etc.),
-    ///   - `32400` for UTC+9 (Japanese, Korean),
-    ///   - `10800` for UTC+3 (Russian, Arabic),
-    ///   - `19800` for UTC+5:30 (Hindi),
-    ///   - `25200` for UTC+7 (Thai, Vietnamese),
+    ///
+    /// - `u64` - The UTC offset in seconds.
     pub fn value(&self) -> u64 {
         match self {
             Lang::EnUsUtf8 => 0,     // UTC
@@ -141,7 +135,8 @@ impl FromStr for Lang {
 /// parsed, it defaults to `Lang::EnUsUtf8`.
 ///
 /// # Returns
-/// - `Lang`: The corresponding `Lang` value based on the `LANG` environment variable.
+///
+/// - `Lang` - The corresponding `Lang` value based on the `LANG` environment variable.
 pub fn from_env_var() -> Lang {
     let lang: Lang = env::var("LANG")
         .unwrap_or_default()
