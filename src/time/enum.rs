@@ -1,45 +1,58 @@
 use crate::*;
 
 /// Represents supported languages.
+///
+/// Each variant corresponds to a specific language and locale combination.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Lang {
-    /// English (United States),
+    /// English (United States).
     EnUsUtf8,
-    /// Chinese (China),
+    /// Chinese (China).
     ZhCnUtf8,
-    /// French (France),
+    /// French (France).
     FrFrUtf8,
-    /// German (Germany),
+    /// German (Germany).
     DeDeUtf8,
-    /// Spanish (Spain),
+    /// Spanish (Spain).
     EsEsUtf8,
-    /// Italian (Italy),
+    /// Italian (Italy).
     ItItUtf8,
-    /// Japanese (Japan),
+    /// Japanese (Japan).
     JaJpUtf8,
-    /// Korean (South Korea),
+    /// Korean (South Korea).
     KoKrUtf8,
-    /// Portuguese (Portugal),
+    /// Portuguese (Portugal).
     PtPtUtf8,
-    /// Russian (Russia),
+    /// Russian (Russia).
     RuRuUtf8,
-    /// Arabic (Saudi Arabia),
+    /// Arabic (Saudi Arabia).
     ArSaUtf8,
-    /// Hindi (India),
+    /// Hindi (India).
     HiInUtf8,
-    /// Thai (Thailand),
+    /// Thai (Thailand).
     ThThUtf8,
-    /// Vietnamese (Vietnam),
+    /// Vietnamese (Vietnam).
     ViVnUtf8,
-    /// Dutch (Netherlands),
+    /// Dutch (Netherlands).
     NlNlUtf8,
-    /// Swedish (Sweden),
+    /// Swedish (Sweden).
     SvSeUtf8,
-    /// Finnish (Finland),
+    /// Finnish (Finland).
     FiFiUtf8,
 }
-
+/// Implementation of Display trait for Lang.
+///
+/// Provides a human-readable string representation for each language variant.
 impl fmt::Display for Lang {
+    /// Formats the language for display.
+    ///
+    /// # Arguments
+    ///
+    /// - `&mut fmt::Formatter` - The formatter to write to.
+    ///
+    /// # Returns
+    ///
+    /// - `fmt::Result` - The result of the formatting operation.
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let lang_str: &str = match self {
             Lang::EnUsUtf8 => "English (US)",
@@ -63,7 +76,6 @@ impl fmt::Display for Lang {
         write!(f, "{}", lang_str)
     }
 }
-
 impl Lang {
     /// Returns the UTC offset in seconds for the corresponding language.
     ///
@@ -96,14 +108,35 @@ impl Lang {
     }
 }
 
+/// Implementation of Default trait for Lang.
+///
+/// Provides a default value for the Lang enum.
 impl Default for Lang {
+    /// Returns the default language.
+    ///
+    /// # Returns
+    ///
+    /// - `Lang` - The default language (Chinese/China).
     fn default() -> Self {
         Lang::ZhCnUtf8
     }
 }
-
+/// Implementation of FromStr trait for Lang.
+///
+/// Allows parsing a string into a Lang variant.
 impl FromStr for Lang {
+    /// The error type for parsing operations.
     type Err = ();
+
+    /// Parses a string into a Lang variant.
+    ///
+    /// # Arguments
+    ///
+    /// - `&str` - The string to parse.
+    ///
+    /// # Returns
+    ///
+    /// - `Result<Self, Self::Err>` - The parsed Lang variant or an error.
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "en_US.UTF-8" => Ok(Lang::EnUsUtf8),
