@@ -1,12 +1,12 @@
 [package]
 name = "hyperlane-time"
-version = "0.7.1"
+version = "0.7.2"
 edition = "2024"
 authors = ["root@ltpp.vip"]
 license = "MIT"
 description = """A library for fetching the current time based on the system's locale settings."""
 keywords = ["time", "hyperlane", "day", "format", "lang"]
-repository = "https://github.com/eastspire/hyperlane-time.git"
+repository = "https://github.com/hyperlane-dev/hyperlane-time.git"
 categories = ["network-programming", "web-programming"]
 exclude = [
     "target",
