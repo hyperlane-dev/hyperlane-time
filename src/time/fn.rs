@@ -35,8 +35,7 @@ pub fn time() -> String {
     let mut date_time: String = String::new();
     write!(
         &mut date_time,
-        "{:04}-{:02}-{:02} {:02}:{:02}:{:02}",
-        year, month, day, hour, minute, second
+        "{year:04}-{month:02}-{day:02} {hour:02}:{minute:02}:{second:02}"
     )
     .unwrap_or_default();
     date_time
@@ -50,7 +49,7 @@ pub fn time() -> String {
 pub fn date() -> String {
     let (year, month, day, _, _, _, _, _) = calculate_time();
     let mut date_time: String = String::new();
-    write!(&mut date_time, "{:04}-{:02}-{:02}", year, month, day).unwrap_or_default();
+    write!(&mut date_time, "{year:04}-{month:02}-{day:02}").unwrap_or_default();
     date_time
 }
 
@@ -255,8 +254,7 @@ pub fn time_millis() -> String {
     let mut date_time: String = String::new();
     write!(
         &mut date_time,
-        "{:04}-{:02}-{:02} {:02}:{:02}:{:02}.{:03}",
-        year, month, day, hour, minute, second, millisecond
+        "{year:04}-{month:02}-{day:02} {hour:02}:{minute:02}:{second:02}.{millisecond:03}"
     )
     .unwrap_or_default();
     date_time
@@ -272,8 +270,7 @@ pub fn time_micros() -> String {
     let mut date_time: String = String::new();
     write!(
         &mut date_time,
-        "{:04}-{:02}-{:02} {:02}:{:02}:{:02}.{:06}",
-        year, month, day, hour, minute, second, microseconds
+        "{year:04}-{month:02}-{day:02} {hour:02}:{minute:02}:{second:02}.{microseconds:06}"
     )
     .unwrap_or_default();
     date_time

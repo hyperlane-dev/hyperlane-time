@@ -73,7 +73,7 @@ impl fmt::Display for Lang {
             Lang::SvSeUtf8 => "Svenska (Sverige)",
             Lang::FiFiUtf8 => "Suomi (Suomi)",
         };
-        write!(f, "{}", lang_str)
+        write!(f, "{lang_str}")
     }
 }
 impl Lang {
