@@ -82,7 +82,7 @@ pub fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
         };
         if days_since_epoch < days_in_month as u64 {
             month = i as u64 + 1;
-            return (year, month, (days_since_epoch + 1) as u64);
+            return (year, month, days_since_epoch + 1);
         }
         days_since_epoch -= days_in_month as u64;
     }
@@ -102,9 +102,9 @@ pub fn gmt() -> String {
     let seconds_in_day: u64 = 86_400;
     let days_since_epoch: u64 = timestamp / seconds_in_day;
     let seconds_of_day: u64 = timestamp % seconds_in_day;
-    let hours: u64 = (seconds_of_day / 3600) as u64;
-    let minutes: u64 = ((seconds_of_day % 3600) / 60) as u64;
-    let seconds: u64 = (seconds_of_day % 60) as u64;
+    let hours: u64 = seconds_of_day / 3600;
+    let minutes: u64 = (seconds_of_day % 3600) / 60;
+    let seconds: u64 = seconds_of_day % 60;
     let (year, month, day) = compute_date(days_since_epoch);
     let weekday: usize = ((days_since_epoch + 4) % 7) as usize;
     format!(
