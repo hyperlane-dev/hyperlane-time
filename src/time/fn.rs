@@ -20,7 +20,7 @@ pub const MONTHS: [&str; 12] = [
 /// # Returns
 ///
 /// - `bool` - Whether the year is a leap year.
-#[inline]
+#[inline(always)]
 pub fn is_leap_year(year: u64) -> bool {
     (year.is_multiple_of(4) && !year.is_multiple_of(100)) || year.is_multiple_of(400)
 }
