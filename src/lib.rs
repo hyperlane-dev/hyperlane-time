@@ -6,7 +6,7 @@ pub(crate) mod time;
 
 pub use time::r#fn::*;
 
-pub(crate) use time::r#enum::from_env_var;
+pub(crate) use time::r#enum::*;
 
 pub(crate) use std::{
     env, fmt,

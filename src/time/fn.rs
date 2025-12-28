@@ -2,14 +2,34 @@ use crate::*;
 
 /// Leap Year
 pub const LEAP_YEAR: [u64; 12] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 /// Common Year
 pub const COMMON_YEAR: [u64; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 /// Days
 pub const DAYS: [&str; 7] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 /// Months
 pub const MONTHS: [&str; 12] = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
+
+/// Gets the time zone offset from the system environment variable.
+///
+/// This function retrieves the `LANG` environment variable and attempts to
+/// parse it into a `Lang` value. If the variable is not set or cannot be
+/// parsed, it defaults to `Lang::EnUsUtf8`.
+///
+/// # Returns
+///
+/// - `Lang` - The corresponding `Lang` value based on the `LANG` environment variable.
+pub fn from_env_var() -> Lang {
+    let lang: Lang = env::var("LANG")
+        .unwrap_or_default()
+        .parse::<Lang>()
+        .unwrap_or_default();
+    lang
+}
 
 /// Determines if a year is a leap year.
 ///
