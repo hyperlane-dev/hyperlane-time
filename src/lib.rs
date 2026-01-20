@@ -2,11 +2,16 @@
 //!
 //! A library for fetching the current time based on the system's locale settings.
 
-pub(crate) mod time;
+pub(crate) mod r#enum;
+pub(crate) mod r#fn;
+pub(crate) mod r#impl;
 
-pub use time::r#fn::*;
+#[cfg(test)]
+mod test;
 
-pub(crate) use time::r#enum::*;
+pub use r#fn::*;
+
+pub(crate) use r#enum::*;
 
 pub(crate) use std::{
     env, fmt,

@@ -1,19 +1,17 @@
+use crate::*;
+
 #[test]
 fn test_lang() {
-    use crate::*;
     println!("test_lang: {}", from_env_var());
 }
 
 #[test]
 fn test_now_time() {
-    use crate::*;
     println!("test_now_time: {}", time());
 }
 
 #[test]
 fn test_methods() {
-    use crate::*;
-
     println!("Current Time: {}", time());
     println!("Current Date: {}", date());
     println!("GMT Date: {}", gmt());
