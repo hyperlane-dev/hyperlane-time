@@ -12,7 +12,7 @@
 
 [Official Documentation](https://docs.ltpp.vip/hyperlane-time/)
 
-[Api Docs](https://docs.rs/hyperlane-time/latest/hyperlane_time/)
+[Api Docs](https://docs.rs/hyperlane-time/latest/)
 
 > A library for fetching the current time based on the system's locale settings.
 
