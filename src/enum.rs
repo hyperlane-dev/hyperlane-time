@@ -1,7 +1,7 @@
 /// Represents supported languages.
 ///
 /// Each variant corresponds to a specific language and locale combination.
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum Lang {
     /// English (United States).
     EnUsUtf8,
