@@ -89,7 +89,7 @@ pub fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
         if days_since_epoch < days_in_year {
             break;
         }
-        days_since_epoch -= days_in_year as u64;
+        days_since_epoch -= days_in_year;
         year += 1;
     }
     let mut month: u64 = 0;
@@ -99,11 +99,11 @@ pub fn compute_date(mut days_since_epoch: u64) -> (u64, u64, u64) {
         } else {
             days
         };
-        if days_since_epoch < days_in_month as u64 {
+        if days_since_epoch < days_in_month {
             month = i as u64 + 1;
             return (year, month, days_since_epoch + 1);
         }
-        days_since_epoch -= days_in_month as u64;
+        days_since_epoch -= days_in_month;
     }
 
     (year, month, 1)
