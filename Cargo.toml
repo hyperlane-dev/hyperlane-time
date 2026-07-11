@@ -1,6 +1,6 @@
 [package]
 name = "hyperlane-time"
-version = "0.7.38"
+version = "0.7.39"
 readme = "README.md"
 edition = "2024"
 authors = ["root@ltpp.vip"]
